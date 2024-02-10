@@ -3,15 +3,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const counselingSessionRouter = require('./routers/counselingRoutes');
-const customEmitter = require('./eventEmitter'); // Ensure this path is correct
+const customEmitter = require('./eventEmitter');
 
 const app = express();
 
-// Event listeners
 customEmitter.on('sessionCreated', (session) => {
   console.log(`New session created: ${session.clientName}`);
 });
-
 customEmitter.on('sessionUpdated', (session) => {
   console.log(`Session updated: ${session.clientName}`);
 });

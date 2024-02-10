@@ -1,4 +1,3 @@
-const logger = require('logger/logger');
 const EventEmitter = require('events');
 class CustomEmitter extends EventEmitter {}
 
