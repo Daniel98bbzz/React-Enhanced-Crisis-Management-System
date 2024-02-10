@@ -1,41 +1,46 @@
-//Daniel Buzaglo - 208745836
-const http = require('http');
-const url = require('url');
-const counselingSession = require('./counselingSession');
+require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const counselingSessionRouter = require('./routers/counselingRoutes');
+const customEmitter = require('./eventEmitter'); // Ensure this path is correct
 
-const server = http.createServer((req, res) => {
-    const reqUrl = url.parse(req.url, true);
-    //THESE ARE THE CRUD OPS:
-    // Add Session
-    if (reqUrl.pathname === '/addSession' && req.method === 'POST') {
-        counselingSession.createSession(req, res);
-    }
-    // Read Sessions
-    else if (reqUrl.pathname === '/getSessions' && req.method === 'GET') {
-        counselingSession.readSessions(res);
-    }
-    // Update Session
-    else if (reqUrl.pathname.startsWith('/updateSession/') && req.method === 'PUT') {
-        const id = reqUrl.pathname.split('/')[2];
-        counselingSession.updateSession(req, res, id);
-    }
-    // Delete Session
-    else if (reqUrl.pathname.startsWith('/deleteSession/') && req.method === 'DELETE') {
-        const id = reqUrl.pathname.split('/')[2];
-        counselingSession.deleteSession(req, res, id);
-    }
-    else if (reqUrl.pathname.startsWith('/getSession/') && req.method === 'GET') {
-        const id = reqUrl.pathname.split('/')[2];
-        counselingSession.getSession(req, res, id);
-    }
-    // Route Not Found
-    else {
-        res.writeHead(404, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'Route not found' }));
-    }
+const app = express();
+
+// Event listeners
+customEmitter.on('sessionCreated', (session) => {
+  console.log(`New session created: ${session.clientName}`);
 });
 
-const PORT = 5000;
-server.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+customEmitter.on('sessionUpdated', (session) => {
+  console.log(`Session updated: ${session.clientName}`);
 });
+
+customEmitter.on('sessionDeleted', (session) => {
+  console.log(`Session deleted: ${session.clientName}`);
+});
+
+const mongoDBURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/counseling-sessions`;
+
+
+mongoose.connect(mongoDBURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('Connected to MongoDB...'))
+    .catch(err => console.error('Could not connect to MongoDB...', err));
+
+app.use(bodyParser.json());
+app.use('/api/sessions', counselingSessionRouter);
+
+app.use((req, res) => {
+  res.status(404).send('The resource you were looking for could not be found.');
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something went wrong on the server.');
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
+module.exports = app;
