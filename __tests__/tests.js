@@ -3,6 +3,7 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require("../server");
 
+
 describe('Counseling Sessions CRUD Operations', () => {
     beforeAll(async () => {
         const mongoDBURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/counseling-sessions`;

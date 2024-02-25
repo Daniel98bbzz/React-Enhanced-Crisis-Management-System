@@ -5,7 +5,9 @@ const bodyParser = require('body-parser');
 const counselingSessionRouter = require('./routers/counselingRoutes');
 const customEmitter = require('./eventEmitter');
 
+
 const app = express();
+const cors = require("cors");
 
 customEmitter.on('sessionCreated', (session) => {
   console.log(`New session created: ${session.clientName}`);
@@ -25,6 +27,7 @@ mongoose.connect(mongoDBURI, { useNewUrlParser: true, useUnifiedTopology: true }
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB...', err));
 
+app.use(cors())
 app.use(bodyParser.json());
 app.use('/api/sessions', counselingSessionRouter);
 
