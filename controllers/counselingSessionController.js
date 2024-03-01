@@ -35,7 +35,6 @@ exports.getSession = async (req, res) => {
     }
 };
 
-
 exports.updateSession = async (req, res) => {
     try {
         const updatedSession = await Session.findByIdAndUpdate(req.params.id, req.body, { new: true });

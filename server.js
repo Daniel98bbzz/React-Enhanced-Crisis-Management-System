@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const counselingSessionRouter = require('./routers/counselingRoutes');
 const customEmitter = require('./eventEmitter');
+const path = require('path');
 
 
 const app = express();
@@ -39,6 +40,14 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something went wrong on the server.');
 });
+
+app.use(express.static(path.join(__dirname, 'CounselingSessionsClient/dist')));
+
+// Handle React routing, return all requests to React app
+app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'CounselingSessionsClient/dist', 'index.html'));
+});
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
