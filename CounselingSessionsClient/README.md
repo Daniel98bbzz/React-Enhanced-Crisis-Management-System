@@ -14,6 +14,7 @@ tracking and adjustments of session details.
 - React for Frontend, see Client Folder
 - Vite for faster development server, better hot-reloading experience, and built-in support for modern JavaScript features.
 - CORS for pulling data from the API
+- Axios Library
 ## Getting Started
 ### Prerequisites
 - Node.js
@@ -24,9 +25,9 @@ tracking and adjustments of session details.
 3.Use `npm install cors` in the Client folder
 4. The server will run on the port specified in the `server.js` file or 5000 by default.
 ### Usage
-1. Start the server using `npm start` via the terminal in the Server folder.
-2. Run the front end code via the command `npm run dev` in the Client
-3. The deployment link will be shown - http://localhost:5173/
+1. Run the front end code via the command `npm run dev` in the Client
+2. The deployment link will be shown - http://localhost:5173/.
+3. Copy the deployment link http://localhost:5173/ to the chrome.
 
 ### Design Inspiration
 The inspiration for the front end design was taken from the following figma design :
