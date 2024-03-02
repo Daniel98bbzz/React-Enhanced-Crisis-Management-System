@@ -1,4 +1,4 @@
-# React Enhanced Counseling Session Management API
+# React Enhanced Counseling Session Management
 ## Overview
 This project is a web service designed to manage counseling sessions. It allows for
 the creation, reading, updating, and deletion of session information, making it an
