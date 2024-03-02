@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = "https://enhanced-counseling-sessions-management.onrender.com/sessions/";
+const URL = "https://enhanced-counseling-sessions-management.onrender.com/api/sessions/";
 
 export const readSessions = async () => {
   try {
