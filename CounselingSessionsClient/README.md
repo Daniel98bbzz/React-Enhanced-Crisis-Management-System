@@ -1,6 +1,6 @@
 # React Enhanced Counseling Session Management Client
 ## Overview
-This project is a web service designed to manage counseling sessions. It allows for
+This project is the front end for the API designed to manage counseling sessions. It allows for
 the creation, reading, updating, and deletion of session information, making it an
 essential tool for crisis counseling management. The service facilitates easy
 tracking and adjustments of session details.
